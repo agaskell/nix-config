@@ -104,6 +104,7 @@ configure-hotkeys
 
 ### Terminal & Shell
 - **Ghostty** - GPU-accelerated terminal
+- **Brave** - Default web browser (run `set-brave-default` after first build)
 - **Fish** - User-friendly shell with abbreviations
 - **Tmux** - Terminal multiplexer
 - **Starship** - Cross-shell prompt

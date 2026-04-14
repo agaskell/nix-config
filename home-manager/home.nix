@@ -11,6 +11,7 @@
   imports = [
     ./programs/aerospace.nix
     ./programs/aws.nix
+    ./programs/brave.nix
     ./programs/dbeaver.nix
     ./programs/direnv.nix
     ./programs/fish.nix

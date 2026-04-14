@@ -23,6 +23,7 @@ This document provides essential context about this Nix-based macOS system confi
     ├── home.nix                 # Main Home Manager config
     └── programs/                # Individual program configurations
         ├── aerospace.nix        # Tiling window manager
+        ├── brave.nix            # Brave browser + set-brave-default helper
         ├── fish.nix             # Fish shell config
         ├── ghostty.nix          # Ghostty terminal emulator
         ├── macos-hotkeys.nix    # System hotkey management
@@ -100,6 +101,7 @@ This system supports Nix development flakes. See `DEV_FLAKE.md` for examples of 
 - `aerospace-help` - Show AeroSpace keybindings
 - `configure-hotkeys` - Disable Spotlight hotkeys
 - `set-ghostty-default` - Set Ghostty as default terminal handler
+- `set-brave-default` - Set Brave as default browser (http/https/.html/.htm)
 - `raycast-setup` - Raycast configuration guide
 
 ## Philosophy

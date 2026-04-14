@@ -60,8 +60,18 @@ cd ~/nix-config
 
 ### Step 2: Initial System Build
 ```bash
-# Build and switch to the new configuration
-sudo darwin-rebuild switch --flake .
+# Build and switch to the new configuration.
+# --impure is required because config.nix is gitignored (per-machine
+# settings). Pure flake evaluation only sees git-tracked files, so the
+# flake can't `import ./config.nix` without --impure.
+sudo darwin-rebuild switch --flake . --impure
+```
+
+For the very first build (before `darwin-rebuild` is on your PATH):
+
+```bash
+sudo nix --extra-experimental-features 'nix-command flakes' \
+  run github:LnL7/nix-darwin -- switch --flake .#<hostname> --impure
 ```
 
 ### Step 3: Set Fish as Default Shell
@@ -126,7 +136,7 @@ configure-hotkeys
 # Update and rebuild system
 cd ~/nix-config
 nix flake update                    # Update dependencies
-sudo darwin-rebuild switch --flake .  # Apply changes
+sudo darwin-rebuild switch --flake . --impure  # Apply changes (--impure for gitignored config.nix)
 
 # Search for packages
 nix search nixpkgs <package-name>

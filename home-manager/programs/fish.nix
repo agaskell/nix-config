@@ -26,8 +26,10 @@
     '';
     
     shellAliases = {
-      # Darwin rebuild shortcut
-      dr = "sudo darwin-rebuild switch --flake ~/nix-config";
+      # Darwin rebuild shortcut. --impure is required because config.nix is
+      # gitignored (per-machine settings); pure flake eval only sees tracked
+      # files.
+      dr = "sudo darwin-rebuild switch --flake ~/nix-config --impure";
 
       # Container/Docker aliases
       docker = "podman";

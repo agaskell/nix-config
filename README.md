@@ -6,27 +6,68 @@ This is a complete Nix-based system configuration for macOS using Nix Darwin and
 
 Before using this configuration, you **must** update the following personal information:
 
-### 1. Create Your Configuration File
+### 1. Per-Machine Configuration (`config.nix`)
 
-Copy the example config and customize it:
-```bash
-cp config.nix.example config.nix
-```
+`config.nix` holds per-machine settings (username, hostname, git identity,
+the `personal` flag). It is **committed to the repo** with the canonical
+owner's values, but each machine overrides it locally without committing —
+see workflow below.
 
-Then edit `config.nix` with your personal settings:
 ```nix
+# config.nix (this file is committed)
 {
-  username = "johndoe";           # Run: whoami
-  hostname = "johns-macbook";     # Run: scutil --get ComputerName
-
+  username = "andy";                   # whoami
+  hostname = "Andys-MacBook-Pro";      # scutil --get LocalHostName
   git = {
-    name = "John Doe";
-    email = "john@example.com";
+    name  = "Andy Gaskell";
+    email = "andy@zubago.com";
   };
+  personal = true;                     # installs Signal/Discord/etc.
 }
 ```
 
-This single file contains all your personal configuration. It's gitignored so your settings stay private.
+#### Per-machine workflow (`skip-worktree`)
+
+Because `config.nix` is tracked, pure flake evaluation can see it (no
+`--impure` needed). To keep local edits out of commits, use git's
+`skip-worktree` bit:
+
+```bash
+# 1. After cloning on a new machine, edit config.nix with local values
+#    (hostname, username, personal flag, etc.).
+$EDITOR config.nix
+
+# 2. Tell git to ignore future edits to this file on this machine.
+git update-index --skip-worktree config.nix
+
+# 3. Verify — git status should not list config.nix as modified.
+git status
+```
+
+`skip-worktree` is a per-clone, per-file flag. It survives commits,
+rebases, and pulls. `git commit -a` will not pick up the local edits.
+
+##### Pulling upstream changes to config.nix
+
+If the committed `config.nix` is ever updated (e.g., a new field is added),
+your skip-worktree'd copy will conflict on pull. To resolve:
+
+```bash
+# Temporarily un-skip, pull, resolve, re-skip.
+git update-index --no-skip-worktree config.nix
+git stash                              # save local values
+git pull
+git stash pop                          # reapply local values (may conflict)
+# ...resolve any conflicts...
+git update-index --skip-worktree config.nix
+```
+
+##### Listing / undoing skip-worktree
+
+```bash
+git ls-files -v | grep '^S'            # list skip-worktree'd files
+git update-index --no-skip-worktree config.nix   # undo
+```
 
 ### 2. Update AWS Configuration (Optional)
 
@@ -60,18 +101,21 @@ cd ~/nix-config
 
 ### Step 2: Initial System Build
 ```bash
-# Build and switch to the new configuration.
-# --impure is required because config.nix is gitignored (per-machine
-# settings). Pure flake evaluation only sees git-tracked files, so the
-# flake can't `import ./config.nix` without --impure.
-sudo darwin-rebuild switch --flake . --impure
+sudo darwin-rebuild switch --flake .
 ```
 
 For the very first build (before `darwin-rebuild` is on your PATH):
 
 ```bash
-sudo nix --extra-experimental-features 'nix-command flakes' \
-  run github:LnL7/nix-darwin -- switch --flake .#<hostname> --impure
+sudo -H nix --extra-experimental-features 'nix-command flakes' \
+  run github:LnL7/nix-darwin -- switch --flake .#<hostname>
+```
+
+If sudo complains that the repo isn't owned by current user (libgit2
+error), also run once:
+
+```bash
+sudo git config --global --add safe.directory "$(pwd)"
 ```
 
 ### Step 3: Set Fish as Default Shell
@@ -136,7 +180,7 @@ configure-hotkeys
 # Update and rebuild system
 cd ~/nix-config
 nix flake update                    # Update dependencies
-sudo darwin-rebuild switch --flake . --impure  # Apply changes (--impure for gitignored config.nix)
+sudo darwin-rebuild switch --flake .  # Apply changes
 
 # Search for packages
 nix search nixpkgs <package-name>
@@ -187,8 +231,10 @@ Add packages to either:
 - `home-manager/programs/personal-apps.nix` - Personal-only apps (Signal, Discord, etc.) gated behind `personal = true;` in `config.nix`
 
 ### Personal vs Client Machines
-This repo is designed to be cloned onto both personal and client/work machines. The
-gitignored `config.nix` carries per-machine settings, including a `personal` boolean:
+This repo is designed to be cloned onto both personal and client/work
+machines. `config.nix` carries per-machine settings, including a `personal`
+boolean. See the "Per-Machine Configuration" section above for the
+`skip-worktree` workflow that keeps local edits out of commits.
 
 - `personal = true;` — installs everything in `home-manager/programs/personal-apps.nix`
 - `personal = false;` (or omitted) — skips that module entirely

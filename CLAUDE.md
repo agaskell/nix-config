@@ -45,7 +45,7 @@ machines so cloning the repo fresh doesn't install Signal/Discord/etc.
 ## Key Commands
 
 ### System Management
-- **Rebuild system**: `sudo darwin-rebuild switch --flake . --impure` (run from `~/nix-config`). The `--impure` flag is required because `config.nix` is gitignored per-machine, and pure flake evaluation only sees git-tracked files.
+- **Rebuild system**: `sudo darwin-rebuild switch --flake .` (run from `~/nix-config`)
 - **Update flake inputs**: `nix flake update`
 - **Search packages**: `nix search nixpkgs <package>`
 

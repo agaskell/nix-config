@@ -39,7 +39,7 @@
 
       # Enable true colors
       set-option -ga terminal-overrides ",xterm-256color:Tc"
-      set-option -ga terminal-overrides ",kitty:Tc"
+      set-option -ga terminal-overrides ",xterm-ghostty:Tc"
       
       # Pane navigation with vim-like keys
       bind h select-pane -L

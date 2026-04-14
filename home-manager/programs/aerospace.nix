@@ -35,8 +35,8 @@
       echo "  Alt+-           - Join with window to the right (horizontal)"
       echo ""
       echo "Other:"
-      echo "  Cmd+Return      - Launch terminal (kitty)"
-      echo "  Alt+Enter       - Launch terminal (kitty) (alternate)"
+      echo "  Cmd+Return      - Launch terminal (ghostty)"
+      echo "  Alt+Enter       - Launch terminal (ghostty) (alternate)"
       echo "  Alt+Shift+Semicolon - Enter resize mode"
       echo "  Alt+Ctrl+Shift+R - Reload config"
       echo "  Cmd+Q           - Close window (macOS default)"
@@ -128,7 +128,7 @@
       alt-q = 'workspace Q'  # Quick workspace
       alt-r = 'workspace R'  # Reference/Research
       alt-s = 'workspace S'  # Slack/Social
-      alt-t = 'workspace T'  # Terminal (kitty)
+      alt-t = 'workspace T'  # Terminal (ghostty)
       alt-u = 'workspace U'  # Utilities
       alt-v = 'workspace V'  # Vim/Editor
       alt-w = 'workspace W'  # Web/Browser
@@ -191,8 +191,8 @@
       alt-ctrl-shift-r = 'reload-config'
       
       # Terminal launch
-      cmd-enter = 'exec-and-forget ${pkgs.kitty}/bin/kitty'
-      alt-enter = 'exec-and-forget ${pkgs.kitty}/bin/kitty'  # Alternative binding
+      cmd-enter = 'exec-and-forget ${pkgs.ghostty-bin}/Applications/Ghostty.app/Contents/MacOS/ghostty'
+      alt-enter = 'exec-and-forget ${pkgs.ghostty-bin}/Applications/Ghostty.app/Contents/MacOS/ghostty'  # Alternative binding
       
       # Resize mode keybindings
       [mode.resize.binding]

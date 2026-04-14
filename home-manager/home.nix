@@ -1,4 +1,4 @@
-{ config, pkgs, lib, username, ... }:
+{ config, pkgs, lib, username, userConfig, ... }:
 
 {
   # Home Manager version compatibility
@@ -8,7 +8,6 @@
   home.username = username;
   home.homeDirectory = "/Users/${username}";
 
-  # Just vim for now
   imports = [
     ./programs/aerospace.nix
     ./programs/aws.nix
@@ -18,7 +17,6 @@
     ./programs/ghostty.nix
     ./programs/git.nix
     ./programs/jira-cli.nix
-    ./programs/kitty.nix
     ./programs/macos-hotkeys.nix
     ./programs/neovim.nix
     ./programs/raycast.nix
@@ -27,7 +25,7 @@
     ./programs/tmux.nix
     ./programs/vim.nix
     ./programs/zsh.nix
-  ];
+  ] ++ lib.optional (userConfig.personal or false) ./programs/personal-apps.nix;
 
   # Minimal packages
   home.packages = with pkgs; [

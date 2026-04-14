@@ -103,7 +103,7 @@ configure-hotkeys
 - **AWS CLI** - v2 with SSO configuration
 
 ### Terminal & Shell
-- **Kitty** - GPU-accelerated terminal
+- **Ghostty** - GPU-accelerated terminal
 - **Fish** - User-friendly shell with abbreviations
 - **Tmux** - Terminal multiplexer
 - **Starship** - Cross-shell prompt
@@ -173,6 +173,16 @@ All program configurations are in separate files under `home-manager/programs/`.
 Add packages to either:
 - `darwin/configuration.nix` - System-wide packages
 - `home-manager/home.nix` - User packages
+- `home-manager/programs/personal-apps.nix` - Personal-only apps (Signal, Discord, etc.) gated behind `personal = true;` in `config.nix`
+
+### Personal vs Client Machines
+This repo is designed to be cloned onto both personal and client/work machines. The
+gitignored `config.nix` carries per-machine settings, including a `personal` boolean:
+
+- `personal = true;` — installs everything in `home-manager/programs/personal-apps.nix`
+- `personal = false;` (or omitted) — skips that module entirely
+
+Add anything you wouldn't want on a client machine to `personal-apps.nix`.
 
 ## 🐛 Troubleshooting
 

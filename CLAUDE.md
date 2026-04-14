@@ -8,7 +8,7 @@ This document provides essential context about this Nix-based macOS system confi
 - **Nix Setup**: Flake-based configuration with Home Manager
 - **Default Shell**: Fish (set via chsh, not just Nix)
 - **Window Manager**: AeroSpace (i3-like tiling WM)
-- **Terminal**: Kitty
+- **Terminal**: Ghostty
 - **Editor**: Neovim, Vim
 
 ## Directory Structure
@@ -23,16 +23,23 @@ This document provides essential context about this Nix-based macOS system confi
     ├── home.nix                 # Main Home Manager config
     └── programs/                # Individual program configurations
         ├── aerospace.nix        # Tiling window manager
-        ├── fish.nix            # Fish shell config
-        ├── ghostty.nix         # Ghostty terminal emulator
-        ├── kitty.nix           # Terminal emulator
-        ├── macos-hotkeys.nix   # System hotkey management
-        ├── neovim.nix          # Neovim config
-        ├── raycast.nix         # Spotlight replacement
+        ├── fish.nix             # Fish shell config
+        ├── ghostty.nix          # Ghostty terminal emulator
+        ├── macos-hotkeys.nix    # System hotkey management
+        ├── neovim.nix           # Neovim config
+        ├── personal-apps.nix    # Personal-only apps (gated by config.nix `personal = true`)
+        ├── raycast.nix          # Spotlight replacement
         ├── set-default-terminal.nix
-        ├── tmux.nix            # Terminal multiplexer config
-        └── zsh.nix            # Zsh config (still available)
+        ├── tmux.nix             # Terminal multiplexer config
+        └── zsh.nix              # Zsh config (still available)
 ```
+
+### Optional packages
+
+`personal-apps.nix` is conditionally imported from `home.nix` only when
+`userConfig.personal` is `true` in `config.nix`. Set `personal = true;`
+on your personal machine; leave it `false` (or omit) on client/work
+machines so cloning the repo fresh doesn't install Signal/Discord/etc.
 
 ## Key Commands
 
@@ -42,7 +49,7 @@ This document provides essential context about this Nix-based macOS system confi
 - **Search packages**: `nix search nixpkgs <package>`
 
 ### Installed Tools
-- **Terminal**: `kitty` (configured to use Fish shell)
+- **Terminal**: `ghostty` (configured to use Fish shell)
 - **Window Management**: AeroSpace is running (Alt+[A-Z] for workspaces)
 - **App Launcher**: Raycast (Cmd+Space after configuration)
 - **Code Editor**: `nvim`
@@ -55,10 +62,10 @@ This document provides essential context about this Nix-based macOS system confi
 - **Main modifier**: Alt (Option)
 - **Help command**: `aerospace-help`
 
-### Kitty Terminal
+### Ghostty Terminal
 - **Font**: FiraCode Nerd Font
-- **Shell**: Fish (configured in kitty.nix)
-- **Window chrome**: Title bar removed (traffic lights remain)
+- **Theme**: Shades Of Purple
+- **Config**: `home-manager/programs/ghostty.nix` (writes `~/.config/ghostty/config`)
 
 ### Fish Shell
 - **Config managed by**: Home Manager
@@ -92,7 +99,7 @@ This system supports Nix development flakes. See `DEV_FLAKE.md` for examples of 
 
 - `aerospace-help` - Show AeroSpace keybindings
 - `configure-hotkeys` - Disable Spotlight hotkeys
-- `set-kitty-default` - Set Kitty as default terminal handler
+- `set-ghostty-default` - Set Ghostty as default terminal handler
 - `raycast-setup` - Raycast configuration guide
 
 ## Philosophy

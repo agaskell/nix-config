@@ -14,6 +14,11 @@
     email = "your.email@example.com";
   };
 
+  # Optional: enable personal-only apps (Signal, Discord, etc.).
+  # See home-manager/programs/personal-apps.nix for the list.
+  # Leave false (or omit) on client / work machines.
+  personal = false;
+
   # Optional: Uncomment and customize as needed
   # aws = {
   #   defaultProfile = "default";

@@ -108,7 +108,7 @@
   # Allow unfree packages (needed for some software)
   nixpkgs.config.allowUnfree = true;
 
-  # Make kitty available as an app
+  # Make user-installed apps (Ghostty, etc.) available on PATH
   environment.systemPath = [ "/etc/profiles/per-user/${username}/bin" ];
   
   # System applications - these get symlinked to /Applications/Nix Apps

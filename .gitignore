@@ -1,0 +1,9 @@
+# User-specific configuration (contains personal info)
+config.nix
+
+# Nix build outputs
+result
+result-*
+
+# macOS
+.DS_Store

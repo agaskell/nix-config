@@ -1,0 +1,22 @@
+# config.nix - Your personal settings
+# Copy this file to config.nix and update with your values
+# Note: config.nix is gitignored - keep your personal settings private
+{
+  # Required: Your macOS username (run: whoami)
+  username = "your-username";
+
+  # Required: Your machine hostname (run: scutil --get ComputerName)
+  hostname = "your-hostname";
+
+  # Required: Git identity
+  git = {
+    name = "Your Name";
+    email = "your.email@example.com";
+  };
+
+  # Optional: Uncomment and customize as needed
+  # aws = {
+  #   defaultProfile = "default";
+  #   region = "us-east-1";
+  # };
+}

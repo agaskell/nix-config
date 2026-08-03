@@ -80,10 +80,9 @@ Installed via Nix in darwin/configuration.nix:
 
 ## Known Issues & Workarounds
 
-1. **awscli2 PINNED**: Currently pinned to version 2.28.1 in `home-manager/programs/aws.nix` due to build failures in 2.30.6. Check if nixpkgs has been updated to 2.31.11+ (which fixes the issue per https://github.com/NixOS/nixpkgs/pull/450333). If so, remove the pin and use `pkgs.awscli2` directly. Test with `nix eval nixpkgs#awscli2.version`.
-2. **AeroSpace Accessibility**: The app is at `~/.local/share/applications/AeroSpace.app` (symlinked for updates)
-3. **Spotlight conflicts**: Run `configure-hotkeys` to disable Spotlight's Cmd+Space
-4. **Tmux + Dev Flakes**: If tmux hardcodes Nix store paths for shells, new windows/panes will fail after environment changes (dev flakes, rebuilds). Solution: Use dynamic PATH updates instead of hardcoded `default-shell` settings. See `home-manager/programs/tmux.nix:31` for the fix.
+1. **AeroSpace Accessibility**: The app is at `~/.local/share/applications/AeroSpace.app` (symlinked for updates)
+2. **Spotlight conflicts**: Run `configure-hotkeys` to disable Spotlight's Cmd+Space
+3. **Tmux + Dev Flakes**: If tmux hardcodes Nix store paths for shells, new windows/panes will fail after environment changes (dev flakes, rebuilds). Solution: Use dynamic PATH updates instead of hardcoded `default-shell` settings. See `home-manager/programs/tmux.nix:31` for the fix.
 
 ## Development Environments
 

@@ -1,56 +1,20 @@
 { config, pkgs, lib, ... }:
 
-let
-  # Pin awscli2 to version 2.28.1 (last working version before 2.30.6)
-  nixpkgs-awscli-pin = import (builtins.fetchTarball {
-    url = "https://github.com/NixOS/nixpkgs/archive/de74240d03acfd332c99dce42fc93239dcaa9cdf.tar.gz";
-    sha256 = "1m1r2r8048wfp27jzwsjry4m062vmwj353qha5r4vwv43dng72k6";
-  }) { system = pkgs.stdenv.hostPlatform.system; };
-in
 {
   # AWS CLI v2
   home.packages = with pkgs; [
-    nixpkgs-awscli-pin.awscli2
-    
+    awscli2
+
     # Optional: Additional AWS tools
     aws-vault      # Secure credential storage
     aws-sso-cli    # Better SSO experience
     ssm-session-manager-plugin  # For SSM sessions
   ];
   
-  # Basic AWS configuration (non-sensitive)
-  # This creates ~/.aws/config with safe defaults
-  # Update with your own AWS SSO configuration
-  home.file.".aws/config".text = ''
-    [default]
-    cli_history = enabled
-    cli_pager =
-    output = json
-    region = us-east-1
+  # ~/.aws/config is intentionally NOT managed by Home Manager.
+  # The AWS CLI mutates it directly (SSO sessions, cli_history, `aws configure`),
+  # which fails against a read-only Nix store symlink. Manage it manually.
 
-    # Example SSO configuration - update with your organization's details
-    # [sso-session my-sso]
-    # sso_start_url = https://your-org.awsapps.com/start
-    # sso_region = us-east-1
-    # sso_registration_scopes = sso:account:access
-
-    # Example profile using SSO
-    # [profile dev]
-    # sso_session = my-sso
-    # sso_account_id = 123456789012
-    # sso_role_name = DeveloperAccess
-    # region = us-east-1
-    # output = json
-
-    # Example profile using SSO for production (read-only)
-    # [profile prod-readonly]
-    # sso_session = my-sso
-    # sso_account_id = 987654321098
-    # sso_role_name = ReadOnlyAccess
-    # region = us-east-1
-    # output = json
-  '';
-  
   # AWS CLI aliases (optional)
   programs.fish.shellAbbrs = {
     # Common AWS commands

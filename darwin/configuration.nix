@@ -19,7 +19,7 @@
     name = username;
     home = "/Users/${username}";
     shell = pkgs.fish;
-    uid = 502;
+    uid = 501;
   };
 
   # System packages available to all users

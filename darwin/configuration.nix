@@ -71,9 +71,13 @@
   programs.zsh.enable = true;
   
   # Ensure fish is properly set as the default shell
-  system.activationScripts.setUserShell.text = ''
+  # postActivation is one of the fixed script names nix-darwin actually runs;
+  # custom names under system.activationScripts type-check but are never
+  # executed. Use -create (unconditional, unlike -change) and the stable
+  # /run/current-system path so the login shell survives garbage collection.
+  system.activationScripts.postActivation.text = ''
     echo "Configuring shell for ${username}..."
-    dscl . -change /Users/${username} UserShell /bin/zsh ${pkgs.fish}/bin/fish || true
+    dscl . -create /Users/${username} UserShell /run/current-system/sw/bin/fish
   '';
 
   # Keyboard settings

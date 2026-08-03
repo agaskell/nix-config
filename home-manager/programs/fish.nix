@@ -27,7 +27,7 @@
     
     shellAliases = {
       # Darwin rebuild shortcut
-      dr = "sudo darwin-rebuild switch --flake ~/nix-config";
+      dr = "sudo darwin-rebuild switch --flake ~/nix-config --impure";
 
       # Container/Docker aliases
       docker = "podman";

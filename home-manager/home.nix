@@ -30,6 +30,7 @@
 
   # Minimal packages
   home.packages = with pkgs; [
+    azure-cli
     bat
     bottom
     btop
@@ -47,6 +48,7 @@
     terraform
     tflint
     tree
+    uv  # Python package/venv manager — used for mlx-lm and other Python tools
     zoxide
   ];
 

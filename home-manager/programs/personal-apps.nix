@@ -5,6 +5,8 @@
   # `userConfig.personal` is true in config.nix. Add to this list as needed.
   home.packages = with pkgs; [
     discord
+    # obsidian  # removed 2026-08: nixpkgs 1.13.4 darwin build is broken (DMG
+    #           # layout changed; sourceRoot mismatch). Re-add once fixed upstream.
   ];
 
   # Discord's built-in updater writes to its .app bundle, which fails in

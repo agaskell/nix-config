@@ -9,9 +9,9 @@ Before using this configuration, you **must** update the following personal info
 ### 1. Per-Machine Configuration (`config.nix`)
 
 `config.nix` holds per-machine settings (username, hostname, git identity,
-the `personal` flag). It is **committed to the repo** with the canonical
-owner's values, but each machine overrides it locally without committing —
-see workflow below.
+the `personal` flag, the account UID). It is **committed to the repo** with
+the canonical owner's values, but each machine overrides it locally without
+committing — see workflow below.
 
 ```nix
 # config.nix (this file is committed)
@@ -23,8 +23,14 @@ see workflow below.
     email = "andy@zubago.com";
   };
   personal = true;                     # installs Signal/Discord/etc.
+  uid = 501;                           # id -u (optional, defaults to 501)
 }
 ```
+
+`uid` matters when the account isn't the machine's first user: macOS
+assigns UID 501 to the first account, 502 to the next, and so on. Home
+Manager activation aborts with a `UID is "X", expected "Y"` error if the
+configured value doesn't match `id -u`.
 
 #### Per-machine workflow (`skip-worktree`)
 

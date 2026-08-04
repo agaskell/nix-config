@@ -31,7 +31,7 @@
       inherit system;
 
       specialArgs = {
-        inherit username;
+        inherit username userConfig;
         # inherit ghostty;  # Not available on Darwin yet
       };
       

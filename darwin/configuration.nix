@@ -1,4 +1,4 @@
-{ config, pkgs, lib, username, ... }:
+{ config, pkgs, lib, username, userConfig, ... }:
 
 {
   # Basic system configuration
@@ -19,7 +19,7 @@
     name = username;
     home = "/Users/${username}";
     shell = pkgs.fish;
-    uid = 501;
+    uid = userConfig.uid or 501;  # per-machine; set in config.nix (`id -u`)
   };
 
   # System packages available to all users

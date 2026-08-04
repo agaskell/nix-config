@@ -25,4 +25,10 @@
 
   # Personal-only apps (Signal, Discord, etc.).
   personal = true;
+
+  # UID of the macOS user account (`id -u`). Per-machine: macOS assigns
+  # 501 to the first account created, 502 to the second, and so on.
+  # Optional — defaults to 501 if omitted. Home Manager activation aborts
+  # if this doesn't match the real UID.
+  uid = 501;
 }
